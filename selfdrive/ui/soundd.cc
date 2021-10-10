@@ -10,6 +10,7 @@
 #include "selfdrive/common/util.h"
 #include "selfdrive/hardware/hw.h"
 #include "selfdrive/ui/ui.h"
+#include "selfdrive/common/params.h"
 
 // TODO: detect when we can't play sounds
 // TODO: detect when we can't display the UI
@@ -83,13 +84,19 @@ private slots:
       }
 
       // play sound
-      if (alert.sound != AudibleAlert::NONE) {
+      if (shouldPlaySound(a)) {
         auto &[s, loops] = sounds[alert.sound];
         s->setLoopCount(loops);
         s->setVolume(volume);
         s->play();
       }
     }
+  }
+  
+  bool shouldPlaySound(Alert a) {
+    bool isQuietDrive = Params().getBool("QuietDrive");
+    return (a.sound == AudibleAlert::CHIME_WARNING2_REPEAT || a.sound == AudibleAlert::CHIME_WARNING_REPEAT) ||
+      (!isQuietDrive && a.sound != AudibleAlert::NONE);
   }
 
 private:

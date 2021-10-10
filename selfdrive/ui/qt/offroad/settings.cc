@@ -70,6 +70,12 @@ TogglesPanel::TogglesPanel(QWidget *parent) : ListWidget(parent) {
                                   "In this mode openpilot will ignore lanelines and just drive how it thinks a human would.",
                                   "../assets/offroad/icon_road.png",
                                   this));
+								  
+  addItem(new ParamControl("QuietDrive",
+                                  "Quiet Drive 🤫",
+                                  "In this mode openpilot will display alerts but only play the most important warning sounds. ",
+                                  "../assets/offroad/icon_mute.png",
+                                  this));
 #ifdef ENABLE_MAPS
   addItem(new ParamControl("NavSettingTime24h",
                                   "Show ETA in 24h format",
